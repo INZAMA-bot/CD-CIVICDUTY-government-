@@ -1,121 +1,118 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CivicDuty - Global Sovereign Infrastructure</title>
-    <!-- Tailwind CSS CDN -->
+    <title>CivicDuty Platform Terminal - v2.0 MVP Framework</title>
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fadeIn { animation: fadeIn 0.2s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slideUp { animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-emerald-500 selection:text-black">
 
-    <div class="max-w-md mx-auto min-h-screen bg-zinc-950 border-x border-zinc-800 flex flex-col justify-between shadow-2xl relative">
+    <div class="max-w-md mx-auto min-h-screen bg-zinc-950 border-x border-zinc-900 flex flex-col justify-between shadow-2xl relative">
         
-        <!-- App Header (Hidden during Portal Selection) -->
-        <header id="app-header" class="p-4 border-b border-zinc-900 sticky top-0 bg-zinc-950/80 backdrop-blur z-10 flex justify-between items-center hidden">
+        <!-- Platform Branding Topbar Header -->
+        <header id="app-header" class="p-4 border-b border-zinc-900 sticky top-0 bg-zinc-950/90 backdrop-blur z-20 flex justify-between items-center hidden">
             <div class="flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                <h1 class="text-lg font-bold tracking-tight uppercase text-zinc-200">CivicDuty</h1>
+                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                <h1 class="text-base font-black tracking-wider uppercase text-zinc-100">CivicDuty</h1>
             </div>
             <div class="flex items-center gap-2">
-                <span id="badge-role" class="text-[9px] font-mono px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">CITIZEN</span>
-                <span id="country-node" class="text-xs font-mono px-2 py-0.5 bg-zinc-900 rounded text-zinc-400 border border-zinc-800">UG_NODE_01</span>
+                <span id="badge-role" class="text-[9px] font-mono px-2 py-0.5 rounded font-bold tracking-wider border">ROLE</span>
+                <span id="country-node" class="text-[10px] font-mono px-2 py-0.5 bg-zinc-900 rounded text-zinc-400 border border-zinc-800">NODE_00</span>
             </div>
         </header>
 
         <!-- Dynamic Main Render Viewport -->
         <main id="main-content" class="flex-1 p-4 overflow-y-auto space-y-4">
-            <!-- Programmatically injected view content -->
+            <!-- Intercepted Views Render inside this node container -->
         </main>
 
-        <!-- Bottom Navigation Rail (Context Dependent) -->
-        <nav id="app-nav" class="border-t border-zinc-900 p-2 bg-zinc-950 flex justify-around items-center sticky bottom-0 hidden">
-            <!-- Nav buttons dynamically changed depending on User Role -->
+        <!-- Context-Driven Navigation Interface Tabbar -->
+        <nav id="app-nav" class="border-t border-zinc-900 p-2 bg-zinc-950 flex justify-around items-center sticky bottom-0 z-20 hidden">
+            <!-- Navigation Action Anchors Dynamically Managed -->
         </nav>
     </div>
 
     <script>
-        // --- Core Global State Management ---
+        // --- Central Dynamic Application State Ledger ---
         let currentView = 'portal_select'; 
-        let userRole = 'citizen'; // citizen | government
+        let userRole = 'citizen'; 
         let selectedCountry = 'Uganda';
         let nodeTag = 'UG_NODE_01';
         let assignedDeptId = 'nwsc'; 
         let uploadedMockMedia = null;
 
-        // Structured Global Hierarchy Setup
-        const standardHierarchies = {
-            "Uganda": { struct: "Ministry", tag: "UG_NODE_01" },
-            "Kenya": { struct: "Ministry", tag: "KE_NODE_02" },
-            "Nigeria": { struct: "Federal Ministry", tag: "NG_NODE_05" },
-            "United States": { struct: "Federal Department", tag: "US_NODE_12" },
-            "United Kingdom": { struct: "HM Department", tag: "UK_NODE_08" },
-            "Ghana": { struct: "Ministry", tag: "GH_NODE_03" }
+        // Citizen Specific Score Profile Metrics
+        let citizenProfile = {
+            name: "Sovereign Citizen",
+            nin: "",
+            score: 140,
+            level: 1,
+            badges: ["🚨 Early Watchdog", "🇺🇬 Transparency Pioneer"]
+        };
+
+        const hierarchyMatrix = {
+            "Uganda": { struct: "Ministry / Authority", tag: "UG_NODE_01" },
+            "Kenya": { struct: "Ministry / State Dept", tag: "KE_NODE_02" },
+            "Nigeria": { struct: "Federal Department", tag: "NG_NODE_05" },
+            "United States": { struct: "Federal Agency", tag: "US_NODE_12" }
         };
 
         let dynamicDepartments = [
-            { id: 'nwsc', country: 'Uganda', name: "National Water & Sewerage Corp", followed: true, icon: "💧" },
-            { id: 'unra', country: 'Uganda', name: "National Roads Authority (UNRA)", followed: true, icon: "🛣️" },
-            { id: 'umeme', country: 'Uganda', name: "Umeme Electricity Grid", followed: false, icon: "⚡" },
-            { id: 'kcaa', country: 'Kenya', name: "Civil Aviation Authority (KCAA)", followed: true, icon: "✈️" },
-            { id: 'npa', country: 'Nigeria', name: "Nigerian Ports Authority", followed: true, icon: "⚓" },
-            { id: 'dot', country: 'United States', name: "Department of Transportation (DOT)", followed: true, icon: "🚘" }
+            { id: 'nwsc', country: 'Uganda', name: "National Water & Sewerage Corp", icon: "💧", followed: true },
+            { id: 'unra', country: 'Uganda', name: "National Roads Authority (UNRA)", icon: "🛣️", followed: true },
+            { id: 'kcca', country: 'Uganda', name: "Kampala Capital City Authority", icon: "🏛️", followed: false },
+            { id: 'umeme', country: 'Uganda', name: "Umeme Power Grid", icon: "⚡", followed: false },
+            { id: 'npa', country: 'Nigeria', name: "Nigerian Ports Authority", icon: "⚓", followed: true },
+            { id: 'dot', country: 'United States', name: "Department of Transportation (DOT)", icon: "🚘", followed: true }
         ];
 
         let masterTickets = [
             { 
-                id: 1, 
+                id: 101, 
                 country: "Uganda",
                 title: "Main Street Water Main Burst", 
                 deptId: "nwsc",
                 dept: "National Water & Sewerage Corp", 
                 status: "Resolved", 
-                color: "text-emerald-400 bg-emerald-400/10", 
-                location: "Sector 4", 
+                color: "text-emerald-400 bg-emerald-400/10 border-emerald-500/20", 
+                location: "Banda, Kampala", 
                 time: "2h ago",
-                caption: "Water pressure has completely destroyed the sidewalk asphalt here. Flooding houses.",
+                caption: "Water pressure has completely destroyed the sidewalk asphalt here. Flooding local premises.",
                 citizenMedia: "📸 sidewalk_flood.jpg",
+                slaRemaining: "0h 00m (SLA Met)",
+                satisfaction: "Satisfied", // Satisfied | Not Satisfied | Pending
                 govResponse: {
                     author: "NWSC Engineering Hub",
-                    message: "Emergency response team dispatched. Repaired broken valve line and cleared the asphalt debris. Service restored at 10:45 AM.",
+                    message: "Emergency response team dispatched. Repaired broken valve line and cleared the asphalt debris. Service completely restored.",
                     attachment: "📄 Works_Receipt_#4429.pdf",
-                    media: "Before/After Assets Linked"
+                    media: "📸 Fixed_Sidewalk_Pipeline.jpg"
                 }
             },
             { 
-                id: 2, 
+                id: 102, 
                 country: "Uganda",
-                title: "Grid Transformer Blown", 
-                deptId: "umeme",
-                dept: "Umeme Electricity Grid", 
-                status: "In Progress", 
-                color: "text-amber-400 bg-amber-400/10", 
+                title: "Unmarked Deep Pothole Hazard", 
+                deptId: "unra",
+                dept: "National Roads Authority (UNRA)", 
+                status: "Investigating", 
+                color: "text-amber-400 bg-amber-400/10 border-amber-500/20", 
                 location: "Kisenyi Ring Rd", 
                 time: "5h ago",
-                caption: "Loud pop heard at 4 AM, entire block is blacked out. Smoke was coming from the pole transformer box.",
-                citizenMedia: "📸 burnt_transformer.mov",
-                govResponse: null
-            },
-            { 
-                id: 3, 
-                country: "United States",
-                title: "Interstate-95 Bridge Expansion Joint Fault", 
-                deptId: "dot",
-                dept: "Department of Transportation (DOT)", 
-                status: "Pending", 
-                color: "text-zinc-400 bg-zinc-400/10", 
-                location: "Exit 24 Overpass", 
-                time: "1d ago",
-                caption: "Visible 3-inch gap showing on structural transition span. Loud clangs when trucks pass.",
-                citizenMedia: "📸 joint_gap.png",
+                caption: "Massive pothole developing right after the blind corner. Highly dangerous for riders at night.",
+                citizenMedia: "📸 deep_pothole.png",
+                slaRemaining: "42h 55m left",
+                satisfaction: null,
                 govResponse: null
             }
         ];
 
+        // --- View Elements DOM Selectors ---
         const mainContent = document.getElementById('main-content');
         const appHeader = document.getElementById('app-header');
         const appNav = document.getElementById('app-nav');
@@ -136,10 +133,10 @@
                 
                 if(userRole === 'government') {
                     roleLabel.innerText = "GOV_OFFICIAL";
-                    roleLabel.className = "text-[9px] font-mono px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20";
+                    roleLabel.className = "text-[9px] font-mono px-1.5 py-0.5 rounded font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20";
                 } else {
-                    roleLabel.innerText = "CITIZEN";
-                    roleLabel.className = "text-[9px] font-mono px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                    roleLabel.innerText = `LVL ${citizenProfile.level} CITIZEN`;
+                    roleLabel.className = "text-[9px] font-mono px-1.5 py-0.5 rounded font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
                 }
                 buildDynamicNavbar();
             }
@@ -147,9 +144,9 @@
         }
 
         function render() {
-            mainContent.classList.remove('animate-fadeIn');
+            mainContent.classList.remove('animate-slideUp');
             void mainContent.offsetWidth; 
-            mainContent.classList.add('animate-fadeIn');
+            mainContent.classList.add('animate-slideUp');
 
             switch(currentView) {
                 case 'portal_select': renderPortalSelect(); break;
@@ -160,83 +157,90 @@
                 case 'report': renderReportForm(); break;
                 case 'gov_dashboard': renderGovDashboard(); break;
                 case 'create_dept': renderCreateDepartment(); break;
+                case 'profile_view': renderProfileView(); break;
             }
         }
 
-        // --- Dynamic Navigation Builders ---
+        // --- Navbar State Management Engine ---
         function buildDynamicNavbar() {
             if (userRole === 'government') {
                 appNav.innerHTML = `
-                    <button id="nav-gov-dash" class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl text-emerald-400">
+                    <button id="nav-gov-dash" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-emerald-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                        <span class="text-[10px] font-medium tracking-wide">Tickets Inbox</span>
+                        <span class="text-[9px] font-medium tracking-wide">Inbox Queue</span>
                     </button>
-                    <button id="nav-create-dept" class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl text-zinc-500 hover:text-zinc-300">
+                    <button id="nav-create-dept" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-zinc-500 hover:text-zinc-300">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span class="text-[10px] font-medium tracking-wide">Add Agency</span>
+                        <span class="text-[9px] font-medium tracking-wide">Create Dept</span>
                     </button>
-                    <button onclick="navigateTo('portal_select')" class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl text-zinc-600 hover:text-red-400">
+                    <button onclick="navigateTo('portal_select')" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-zinc-600 hover:text-red-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                        <span class="text-[10px] font-medium tracking-wide">Exit</span>
+                        <span class="text-[9px] font-medium tracking-wide">Disconnect</span>
                     </button>
                 `;
                 document.getElementById('nav-gov-dash').addEventListener('click', () => { updateGovNavUI('gov_dashboard'); navigateTo('gov_dashboard'); });
                 document.getElementById('nav-create-dept').addEventListener('click', () => { updateGovNavUI('create_dept'); navigateTo('create_dept'); });
             } else {
                 appNav.innerHTML = `
-                    <button id="nav-feed" class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl text-emerald-400">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                        <span class="text-[10px] font-medium tracking-wide">Registry</span>
+                    <button id="nav-feed" class="flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-emerald-400">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <span class="text-[9px] font-medium tracking-wide">Registry</span>
                     </button>
-                    <button id="nav-departments" class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl text-zinc-500 hover:text-zinc-300">
+                    <button id="nav-departments" class="flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-zinc-500 hover:text-zinc-300">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                        <span class="text-[10px] font-medium tracking-wide">Directory</span>
+                        <span class="text-[9px] font-medium tracking-wide">Walls</span>
                     </button>
-                    <button id="nav-report" class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl text-zinc-500 hover:text-zinc-300">
+                    <button id="nav-report" class="flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-zinc-500 hover:text-zinc-300">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
-                        <span class="text-[10px] font-medium tracking-wide">File Ticket</span>
+                        <span class="text-[9px] font-medium tracking-wide">Speak</span>
+                    </button>
+                    <button id="nav-profile" class="flex flex-col items-center gap-1 py-1.5 px-2 rounded-xl text-zinc-500 hover:text-zinc-300">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        <span class="text-[9px] font-medium tracking-wide">Profile</span>
                     </button>
                 `;
                 document.getElementById('nav-feed').addEventListener('click', () => { updateCitizenNavUI('feed'); navigateTo('feed'); });
                 document.getElementById('nav-departments').addEventListener('click', () => { updateCitizenNavUI('departments'); navigateTo('departments'); });
                 document.getElementById('nav-report').addEventListener('click', () => { updateCitizenNavUI('report'); navigateTo('report'); });
+                document.getElementById('nav-profile').addEventListener('click', () => { updateCitizenNavUI('profile_view'); navigateTo('profile_view'); });
             }
         }
 
         function updateCitizenNavUI(active) {
-            document.getElementById('nav-feed').className = `flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-colors ${active === 'feed' ? 'text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`;
-            document.getElementById('nav-departments').className = `flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-colors ${active === 'departments' ? 'text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`;
-            document.getElementById('nav-report').className = `flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-colors ${active === 'report' ? 'text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`;
+            document.getElementById('nav-feed').className = `flex flex-col items-center gap-1 py-1.5 px-2 transition-colors ${active === 'feed' ? 'text-emerald-400' : 'text-zinc-500'}`;
+            document.getElementById('nav-departments').className = `flex flex-col items-center gap-1 py-1.5 px-2 transition-colors ${active === 'departments' ? 'text-emerald-400' : 'text-zinc-500'}`;
+            document.getElementById('nav-report').className = `flex flex-col items-center gap-1 py-1.5 px-2 transition-colors ${active === 'report' ? 'text-emerald-400' : 'text-zinc-500'}`;
+            document.getElementById('nav-profile').className = `flex flex-col items-center gap-1 py-1.5 px-2 transition-colors ${active === 'profile_view' ? 'text-emerald-400' : 'text-zinc-500'}`;
         }
 
         function updateGovNavUI(active) {
-            document.getElementById('nav-gov-dash').className = `flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-colors ${active === 'gov_dashboard' ? 'text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`;
-            document.getElementById('nav-create-dept').className = `flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-colors ${active === 'create_dept' ? 'text-emerald-400' : 'text-zinc-500 hover:text-zinc-300'}`;
+            document.getElementById('nav-gov-dash').className = `flex flex-col items-center gap-1 py-1.5 px-3 transition-colors ${active === 'gov_dashboard' ? 'text-emerald-400' : 'text-zinc-500'}`;
+            document.getElementById('nav-create-dept').className = `flex flex-col items-center gap-1 py-1.5 px-3 transition-colors ${active === 'create_dept' ? 'text-emerald-400' : 'text-zinc-500'}`;
         }
 
-        // --- View 1: Core Portal Select Gate ---
+        // --- View 1: Entry / Access Gate Portal ---
         function renderPortalSelect() {
             mainContent.innerHTML = `
-                <div class="space-y-6 pt-12 pb-4 text-center">
+                <div class="space-y-6 pt-16 pb-4 text-center">
                     <div class="space-y-2">
                         <div class="inline-flex p-4 rounded-3xl bg-zinc-900 border border-zinc-800 text-3xl shadow-inner">⚡</div>
-                        <h2 class="text-2xl font-black tracking-tight text-zinc-100">CIVICDUTY GLOBAL</h2>
-                        <p class="text-xs text-zinc-400 max-w-xs mx-auto">Sovereign infrastructure network for immediate national resolution logs.</p>
+                        <h2 class="text-xl font-black tracking-wider text-zinc-100 uppercase">CIVICDUTY GLOBAL</h2>
+                        <p class="text-xs text-zinc-400 max-w-xs mx-auto">Sovereign identity node framework for instant national resolution tracking.</p>
                     </div>
 
                     <div class="space-y-3 pt-6">
-                        <button onclick="userRole='citizen'; navigateTo('citizen_onboarding');" class="w-full bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
+                        <button onclick="userRole='citizen'; navigateTo('citizen_onboarding');" class="w-full bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
                             <div class="space-y-1">
-                                <span class="text-sm font-bold text-zinc-200 block">Sovereign Citizen Access</span>
-                                <span class="text-xs text-zinc-500 block">File geo-verified logs, follow local agency frameworks.</span>
+                                <span class="text-sm font-bold text-zinc-200 block">Sovereign Citizen Gateway</span>
+                                <span class="text-xs text-zinc-500 block">File geo-verified logs, track active ministerial SLA walls.</span>
                             </div>
                             <span class="text-zinc-600 group-hover:text-emerald-400 transition-colors">➔</span>
                         </button>
 
-                        <button onclick="userRole='government'; navigateTo('gov_onboarding');" class="w-full bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
+                        <button onclick="userRole='government'; navigateTo('gov_onboarding');" class="w-full bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
                             <div class="space-y-1">
                                 <span class="text-sm font-bold text-amber-400 block">State Administrator Access</span>
-                                <span class="text-xs text-zinc-500 block">Deploy resolution metrics, attach work orders, modify nodes.</span>
+                                <span class="text-xs text-zinc-500 block">Deploy resolution metrics, attach work order receipts, build nodes.</span>
                             </div>
                             <span class="text-zinc-600 group-hover:text-amber-400 transition-colors">➔</span>
                         </button>
@@ -248,45 +252,45 @@
         // --- View 2: Citizen Document Secure Onboarding ---
         function renderCitizenOnboarding() {
             mainContent.innerHTML = `
-                <div class="space-y-5 pt-4">
-                    <div class="flex items-center gap-2" onclick="navigateTo('portal_select')">
-                        <span class="text-xs text-zinc-500 cursor-pointer hover:text-zinc-300">⇜ Back to Access Gate</span>
+                <div class="space-y-5 pt-2">
+                    <div class="flex items-center gap-1 text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('portal_select')">
+                        <span>⇜ Return to Access Gate</span>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold tracking-tight text-zinc-100">Verify Citizen Ledger</h2>
-                        <p class="text-xs text-zinc-400">Cryptographically lock your interface into your sovereign domestic node.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-zinc-100">Sovereign Citizen Onboarding</h2>
+                        <p class="text-xs text-zinc-400">Lock your reporting interface into your verified identity ledger node.</p>
                     </div>
 
                     <div class="space-y-4 bg-zinc-900/40 p-5 rounded-2xl border border-zinc-900">
                         <label class="block space-y-1.5">
                             <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Select Nation State</span>
                             <select id="citizen-country-select" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500">
-                                ${Object.keys(standardHierarchies).map(c => `<option value="${c}">${c}</option>`).join('')}
+                                ${Object.keys(hierarchyMatrix).map(c => `<option value="${c}">${c}</option>`).join('')}
                             </select>
                         </label>
 
-                        <div class="space-y-1.5">
-                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Identity Document Type</span>
-                            <div class="grid grid-cols-2 gap-2">
-                                <button class="p-3 text-xs bg-zinc-900 border border-zinc-700 rounded-xl font-medium text-emerald-400">🪪 National ID Card</button>
-                                <button class="p-3 text-xs bg-zinc-900 border border-zinc-900 rounded-xl font-medium text-zinc-400"> Passport Document</button>
-                            </div>
-                        </div>
+                        <label class="block space-y-1.5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">National Identification Number (NIN / SSN)</span>
+                            <input id="citizen-nin" type="text" placeholder="Enter ID string for verification lookup..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500" />
+                        </label>
 
-                        <div class="border border-dashed border-zinc-800 rounded-xl p-6 text-center bg-zinc-950">
-                            <span class="text-xs text-zinc-500 block">Awaiting biometric or document camera scan...</span>
+                        <div class="border border-dashed border-zinc-800 rounded-xl p-4 text-center bg-zinc-950">
+                            <span class="text-[11px] text-zinc-500 block">✓ Africa's Talking API & NIRA Identity Link Sandbox Active</span>
                         </div>
                     </div>
 
-                    <button id="btn-confirm-citizen" class="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-semibold rounded-xl py-3.5 text-sm transition-all">
-                        Initialize Node View
+                    <button id="btn-confirm-citizen" class="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-bold rounded-xl py-3.5 text-sm transition-all">
+                        Initialize Node Access
                     </button>
                 </div>
             `;
 
             document.getElementById('btn-confirm-citizen').addEventListener('click', () => {
+                const ninVal = document.getElementById('citizen-nin').value;
+                if(!ninVal) return alert("NIN Identity Check required for single-account lock optimization.");
+                citizenProfile.nin = ninVal;
                 selectedCountry = document.getElementById('citizen-country-select').value;
-                nodeTag = standardHierarchies[selectedCountry].tag;
+                nodeTag = hierarchyMatrix[selectedCountry].tag;
                 navigateTo('feed');
             });
         }
@@ -294,30 +298,30 @@
         // --- View 3: Government Leadership Structure Onboarding ---
         function renderGovOnboarding() {
             mainContent.innerHTML = `
-                <div class="space-y-5 pt-4">
-                    <div class="flex items-center gap-2" onclick="navigateTo('portal_select')">
-                        <span class="text-xs text-zinc-500 cursor-pointer hover:text-zinc-300">⇜ Back to Access Gate</span>
+                <div class="space-y-5 pt-2">
+                    <div class="flex items-center gap-1 text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('portal_select')">
+                        <span>⇜ Return to Access Gate</span>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold tracking-tight text-amber-400">Sovereign Authority Sign-In</h2>
-                        <p class="text-xs text-zinc-400">Establish operational binding with your country structure registry.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-amber-400">State Authentication Hub</h2>
+                        <p class="text-xs text-zinc-400">Establish structural control over your specialized operational sector queue.</p>
                     </div>
 
                     <div class="space-y-4 bg-zinc-900/40 p-5 rounded-2xl border border-zinc-900">
                         <label class="block space-y-1.5">
-                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Select Jurisdiction</span>
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Select Country Jurisdiction</span>
                             <select id="gov-country-select" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:border-amber-500">
-                                ${Object.keys(standardHierarchies).map(c => `<option value="${c}">${c}</option>`).join('')}
+                                ${Object.keys(hierarchyMatrix).map(c => `<option value="${c}">${c}</option>`).join('')}
                             </select>
                         </label>
 
                         <div id="gov-dept-wrapper" class="space-y-1.5">
-                            <!-- Injected dynamically by helper function below -->
+                            <!-- Populated on choice updates -->
                         </div>
 
                         <label class="block space-y-1.5">
-                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Secret Clearance Key</span>
-                            <input type="password" value="••••••••••••••" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-400 focus:outline-none" disabled />
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Official Domain Security Pass (2FA)</span>
+                            <input type="password" value="••••••••••••••" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-500 cursor-not-allowed" disabled />
                         </label>
                     </div>
 
@@ -331,15 +335,15 @@
             
             function updateDeptDropdown() {
                 const c = countrySelector.value;
-                const structLabel = standardHierarchies[c].struct;
+                const structuralTerm = hierarchyMatrix[c].struct;
                 const filteredDepts = dynamicDepartments.filter(d => d.country === c);
 
                 let dropdownHtml = `
-                    <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Assigned Autonomous ${structLabel}</span>
+                    <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Assigned Autonomous ${structuralTerm}</span>
                     <select id="gov-dept-select" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:border-amber-500">
                 `;
                 if(filteredDepts.length === 0) {
-                    dropdownHtml += `<option value="none">No agencies listed. Create one after login.</option>`;
+                    dropdownHtml += `<option value="none">No departments live on this node. Register one inside.</option>`;
                 } else {
                     filteredDepts.forEach(d => {
                         dropdownHtml += `<option value="${d.id}">${d.name}</option>`;
@@ -350,21 +354,21 @@
             }
 
             countrySelector.addEventListener('change', updateDeptDropdown);
-            updateDeptDropdown(); // Base execution
+            updateDeptDropdown(); 
 
             document.getElementById('btn-confirm-gov').addEventListener('click', () => {
                 selectedCountry = countrySelector.value;
-                nodeTag = standardHierarchies[selectedCountry].tag;
-                const deptSelectBox = document.getElementById('gov-dept-select');
-                assignedDeptId = deptSelectBox ? deptSelectBox.value : 'none';
+                nodeTag = hierarchyMatrix[selectedCountry].tag;
+                const selectElement = document.getElementById('gov-dept-select');
+                assignedDeptId = selectElement ? selectElement.value : 'none';
                 navigateTo('gov_dashboard');
             });
         }
 
-        // --- View 4: Citizen Core Stream (Subscribed vs Trending Framework) ---
+        // --- View 4: Citizen Feed Registry View ---
         function renderFeed() {
             updateCitizenNavUI('feed');
-            const structuralTerm = standardHierarchies[selectedCountry].struct;
+            const term = hierarchyMatrix[selectedCountry].struct;
             const followedIds = dynamicDepartments.filter(d => d.followed && d.country === selectedCountry).map(d => d.id);
 
             let html = `
@@ -372,31 +376,31 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-500">
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </span>
-                    <input type="text" placeholder="Search logs, structural tags, categories..." class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl py-2.5 pl-10 pr-4 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500/50" />
+                    <input type="text" placeholder="Search parameters, tracking keys..." class="w-full bg-zinc-900/50 border border-zinc-800 rounded-xl py-2 pl-9 pr-4 text-xs text-zinc-200 focus:outline-none focus:border-emerald-500/50" />
                 </div>
 
-                <div class="space-y-4">
-                    <h2 class="text-xs font-bold tracking-wider text-zinc-500 uppercase px-1">Subscribed ${structuralTerm} Stream</h2>
+                <div class="space-y-3">
+                    <h2 class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase px-1">SUBSCRIBED STREAM (${selectedCountry})</h2>
             `;
 
             const domesticSubscribed = masterTickets.filter(t => t.country === selectedCountry && followedIds.includes(t.deptId));
             if(domesticSubscribed.length === 0) {
-                html += `<p class="text-xs text-zinc-600 px-1 italic">No active subscriptions on this node. Toggle directory targets.</p>`;
+                html += `<p class="text-xs text-zinc-600 px-1 italic">No active followed channels. Add specialized target walls.</p>`;
             } else {
                 domesticSubscribed.forEach(t => html += generateTicketCardHtml(t));
             }
 
             html += `
                 </div>
-                <div class="space-y-4 pt-2">
-                    <h2 class="text-xs font-bold tracking-wider text-amber-500/80 uppercase px-1 flex items-center gap-1">
-                        ⚡ Trending National Logs (Other Targets)
+                <div class="space-y-3 pt-2">
+                    <h2 class="text-[10px] font-bold tracking-wider text-amber-500/80 uppercase px-1 flex items-center gap-1">
+                        ⚡ REGIONAL STREAM FEED (ALL TARGETS)
                     </h2>
             `;
 
             const trendingTickets = masterTickets.filter(t => t.country !== selectedCountry || !followedIds.includes(t.deptId));
             if(trendingTickets.length === 0) {
-                html += `<p class="text-xs text-zinc-600 px-1 italic">No macro transactional logs outside of scope.</p>`;
+                html += `<p class="text-xs text-zinc-600 px-1 italic">No extra-jurisdictional files logged.</p>`;
             } else {
                 trendingTickets.forEach(t => html += generateTicketCardHtml(t));
             }
@@ -407,46 +411,69 @@
 
         function generateTicketCardHtml(ticket) {
             let resolutionBlock = "";
+            
             if (ticket.govResponse) {
+                let ratingAction = "";
+                if (!ticket.satisfaction) {
+                    ratingAction = `
+                        <div class="border-t border-emerald-900/30 pt-2 mt-2 flex items-center justify-between">
+                            <span class="text-[10px] text-zinc-400 font-semibold uppercase">Close Resolved Loop:</span>
+                            <div class="flex gap-2">
+                                <button onclick="rateResolution(${ticket.id}, 'Satisfied')" class="text-[10px] font-bold bg-emerald-500 text-zinc-950 px-2 py-1 rounded hover:bg-emerald-400 transition-all">😊 Satisfied</button>
+                                <button onclick="rateResolution(${ticket.id}, 'Not Satisfied')" class="text-[10px] font-bold bg-zinc-800 text-zinc-300 px-2 py-1 rounded hover:bg-red-900 hover:text-white transition-all">😠 Disappointed</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    ratingAction = `
+                        <div class="border-t border-emerald-900/30 pt-2 mt-1.5 text-right">
+                            <span class="text-[10px] font-mono tracking-wide ${ticket.satisfaction === 'Satisfied' ? 'text-emerald-400' : 'text-red-400'}">
+                                Citizen Feedback Logged: [${ticket.satisfaction.toUpperCase()}]
+                            </span>
+                        </div>
+                    `;
+                }
+
                 resolutionBlock = `
-                    <div class="bg-emerald-950/20 border border-emerald-900/40 rounded-lg p-3 space-y-2 mt-2">
+                    <div class="bg-emerald-950/20 border border-emerald-900/40 rounded-xl p-3.5 space-y-2 mt-2">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">🏛️ ${ticket.govResponse.author}</span>
-                            <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded uppercase tracking-wider font-bold">Action Dispatched</span>
+                            <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded uppercase font-bold tracking-wider">Action Logged</span>
                         </div>
                         <p class="text-xs text-zinc-300 leading-relaxed">${ticket.govResponse.message}</p>
                         <div class="flex flex-wrap gap-2 pt-1 text-[10px] text-zinc-400 font-mono">
-                            <span class="bg-zinc-950 px-2 py-1 rounded border border-zinc-900 flex items-center gap-1">📁 ${ticket.govResponse.attachment}</span>
-                            <span class="bg-zinc-950 px-2 py-1 rounded border border-zinc-900 flex items-center gap-1">🖼️ ${ticket.govResponse.media}</span>
+                            <span class="bg-zinc-950 px-2 py-1 rounded border border-zinc-900">📂 ${ticket.govResponse.attachment}</span>
+                            <span class="bg-zinc-950 px-2 py-1 rounded border border-zinc-900">${ticket.govResponse.media}</span>
                         </div>
+                        ${ratingAction}
                     </div>
                 `;
             } else {
                 resolutionBlock = `
-                    <div class="bg-zinc-900/20 border border-dashed border-zinc-900 rounded-lg p-3 text-center mt-1">
-                        <span class="text-[11px] text-zinc-500 italic">Awaiting State Architecture Intervention</span>
+                    <div class="bg-zinc-900/20 border border-dashed border-zinc-900 rounded-lg p-2.5 text-center mt-1">
+                        <span class="text-[10px] text-zinc-500 font-mono tracking-tight block">⏱️ SLA Active Timeline: ${ticket.slaRemaining}</span>
                     </div>
                 `;
             }
 
             return `
-                <div class="bg-zinc-900/40 border border-zinc-900 rounded-xl p-4 space-y-3 hover:border-zinc-800 transition-all">
+                <div class="bg-zinc-900/40 border border-zinc-900 rounded-xl p-4 space-y-2.5 hover:border-zinc-800 transition-all">
                     <div class="flex justify-between items-start gap-4">
                         <div>
-                            <span class="text-[9px] font-mono tracking-widest text-zinc-500 uppercase block">${ticket.country} Node</span>
+                            <span class="text-[9px] font-mono tracking-wider text-zinc-500 uppercase block">${ticket.country} Node</span>
                             <h3 class="font-bold text-sm text-zinc-200 mt-0.5">${ticket.title}</h3>
                             <span class="text-xs text-zinc-400">${ticket.dept}</span>
                         </div>
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full uppercase font-bold tracking-wider whitespace-nowrap ${ticket.color}">
+                        <span class="text-[9px] font-mono px-2 py-0.5 rounded uppercase font-bold tracking-wider border ${ticket.color}">
                             ${ticket.status}
                         </span>
                     </div>
                     
-                    ${ticket.caption ? `<p class="text-xs text-zinc-400 leading-normal">${ticket.caption}</p>` : ''}
+                    <p class="text-xs text-zinc-400 leading-relaxed">${ticket.caption}</p>
                     
-                    ${ticket.citizenMedia ? `<div class="text-xs text-zinc-500 font-mono bg-zinc-950 p-2 rounded border border-zinc-900 flex items-center gap-1.5">${ticket.citizenMedia}</div>` : ''}
+                    ${ticket.citizenMedia ? `<div class="text-[10px] text-zinc-500 font-mono bg-zinc-950 p-2 rounded border border-zinc-900">📄 Citizen Proof: ${ticket.citizenMedia}</div>` : ''}
 
-                    <div class="flex items-center justify-between text-[11px] text-zinc-500 border-t border-zinc-900/60 pt-2">
+                    <div class="flex items-center justify-between text-[10px] text-zinc-500 pt-1 border-t border-zinc-900">
                         <span>📍 ${ticket.location}</span>
                         <span>⏱️ ${ticket.time}</span>
                     </div>
@@ -456,32 +483,43 @@
             `;
         }
 
-        // --- View 5: Directory Framework Control ---
+        window.rateResolution = function(id, value) {
+            const ticket = masterTickets.find(t => t.id === id);
+            if(ticket) {
+                ticket.satisfaction = value;
+                if(value === 'Satisfied') {
+                    citizenProfile.score += 10; // Award performance points
+                }
+                render();
+            }
+        };
+
+        // --- View 5: Ministry Walls Dashboard ---
         function renderDepartments() {
             updateCitizenNavUI('departments');
-            const term = standardHierarchies[selectedCountry].struct;
+            const term = hierarchyMatrix[selectedCountry].struct;
 
             let html = `
-                <div class="space-y-2">
-                    <h2 class="text-base font-semibold text-zinc-200">${selectedCountry} Agency Matrix</h2>
-                    <p class="text-xs text-zinc-500">Subscribe directly to institutional pipelines to track their key performance vectors.</p>
+                <div class="space-y-1">
+                    <h2 class="text-base font-bold text-zinc-200">National Wall Directory</h2>
+                    <p class="text-xs text-zinc-500">Subscribe directly to institutional structures to filter dashboard feeds.</p>
                 </div>
                 <div class="space-y-2 pt-2">
             `;
 
             const regionalDepts = dynamicDepartments.filter(d => d.country === selectedCountry);
             if(regionalDepts.length === 0) {
-                html += `<p class="text-xs text-zinc-600 italic">No structured agencies active for this node country.</p>`;
+                html += `<p class="text-xs text-zinc-600 italic">No verification targets registered on this network node.</p>`;
             } else {
                 regionalDepts.forEach(dept => {
                     html += `
                         <div class="bg-zinc-900/30 border border-zinc-900 p-3 rounded-xl flex items-center justify-between transition-all hover:border-zinc-800">
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-sm">${dept.icon}</div>
-                                <span class="text-xs font-medium text-zinc-200">${dept.name}</span>
+                                <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xs">${dept.icon}</div>
+                                <span class="text-xs font-semibold text-zinc-200">${dept.name}</span>
                             </div>
-                            <button onclick="toggleFollow('${dept.id}')" class="text-xs font-medium px-3 py-1.5 rounded-lg transition-all ${dept.followed ? 'bg-zinc-800 text-zinc-400 hover:text-red-400' : 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-zinc-950'}">
-                                ${dept.followed ? 'Unsubscribe' : 'Subscribe'}
+                            <button onclick="toggleFollow('${dept.id}')" class="text-[10px] font-bold px-3 py-1.5 rounded-lg transition-all ${dept.followed ? 'bg-zinc-900 text-zinc-500 hover:text-red-400' : 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-zinc-950'}">
+                                ${dept.followed ? 'Following' : 'Follow'}
                             </button>
                         </div>
                     `;
@@ -497,39 +535,38 @@
             if(tgt) { tgt.followed = !tgt.followed; renderDepartments(); }
         };
 
-        // --- View 6: Citizen Ticket Creation System ---
+        // --- View 6: Post Composer System (Speak) ---
         function renderReportForm() {
             updateCitizenNavUI('report');
-            const term = standardHierarchies[selectedCountry].struct;
             const regionalDepts = dynamicDepartments.filter(d => d.country === selectedCountry);
 
             mainContent.innerHTML = `
-                <div class="space-y-4 pt-2">
+                <div class="space-y-4 pt-1">
                     <div>
-                        <h2 class="text-base font-semibold text-zinc-200">Log Resolution Ticket</h2>
-                        <p class="text-xs text-zinc-500 mt-0.5">Submit geotagged proof directly into active departmental queues.</p>
+                        <h2 class="text-base font-bold text-zinc-200">Log Resolution Ticket</h2>
+                        <p class="text-xs text-zinc-500">Submit geotagged situational data straight into department metrics.</p>
                     </div>
                     <div class="space-y-3">
-                        <label class="block space-y-1.5">
-                            <span class="text-xs text-zinc-400 font-medium">Issue Headline</span>
-                            <input id="form-title" type="text" placeholder="Describe the structural fault..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:border-zinc-700" />
+                        <label class="block space-y-1">
+                            <span class="text-xs font-bold text-zinc-400 uppercase tracking-wide">Issue Headline</span>
+                            <input id="form-title" type="text" placeholder="e.g., Damaged bridge railing" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-200 focus:outline-none focus:border-zinc-700" />
                         </label>
-                        <label class="block space-y-1.5">
-                            <span class="text-xs text-zinc-400 font-medium">Target Infrastructure Agency</span>
-                            <select id="form-dept" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-300 focus:outline-none">
+                        <label class="block space-y-1">
+                            <span class="text-xs font-bold text-zinc-400 uppercase tracking-wide">Target Department</span>
+                            <select id="form-dept" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-300 focus:outline-none">
                                 ${regionalDepts.map(d => `<option value="${d.id}">${d.name}</option>`).join('')}
                             </select>
                         </label>
-                        <label class="block space-y-1.5">
-                            <span class="text-xs text-zinc-400 font-medium">Context Caption</span>
-                            <textarea id="form-caption" rows="3" placeholder="Provide details for deployment crews..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none resize-none"></textarea>
+                        <label class="block space-y-1">
+                            <span class="text-xs font-bold text-zinc-400 uppercase tracking-wide">Description / Context Caption</span>
+                            <textarea id="form-caption" rows="3" maxlength="500" placeholder="Provide precise situation data... (Max 500 characters)" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-200 focus:outline-none resize-none"></textarea>
                         </label>
                         
-                        <div id="media-upload-zone" class="border-2 border-dashed border-zinc-800 rounded-xl p-5 text-center hover:bg-zinc-900/20 transition-all cursor-pointer">
-                            <span id="upload-status" class="text-xs text-zinc-500 block">Attach Media Verification (Photo/Video)</span>
+                        <div id="media-upload-zone" class="border border-dashed border-zinc-800 rounded-xl p-5 text-center hover:bg-zinc-900/20 transition-all cursor-pointer bg-zinc-900/10">
+                            <span id="upload-status" class="text-xs text-zinc-500 block font-medium">Attach Media Verification (Photo/Video)</span>
                         </div>
 
-                        <button id="dispatch-ticket-btn" class="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-bold rounded-xl py-3.5 text-sm transition-all mt-2">
+                        <button id="dispatch-ticket-btn" class="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-black rounded-xl py-3 text-xs uppercase tracking-wider transition-all pt-3.5">
                             Dispatch Verified Ticket
                         </button>
                     </div>
@@ -538,27 +575,29 @@
 
             const uploadZone = document.getElementById('media-upload-zone');
             uploadZone.addEventListener('click', () => {
-                uploadedMockMedia = "📸 VALID_ATTACHMENT_" + Math.floor(Math.random() * 8999 + 1000) + ".png";
+                uploadedMockMedia = "📸 CIVIC_PROOF_" + Math.floor(Math.random() * 8999 + 1000) + ".jpg";
                 document.getElementById('upload-status').innerText = `Linked: ${uploadedMockMedia}`;
-                uploadZone.className = "border-2 border-dashed border-emerald-500/40 bg-emerald-500/5 rounded-xl p-5 text-center cursor-pointer";
+                uploadZone.className = "border border-dashed border-emerald-500/40 bg-emerald-500/5 rounded-xl p-5 text-center cursor-pointer";
             });
 
             document.getElementById('dispatch-ticket-btn').addEventListener('click', () => {
                 const dBox = document.getElementById('form-dept');
-                if(!dBox.value) return;
+                if(!dBox.value || !document.getElementById('form-title').value) return alert("Headline and targets are required.");
 
                 masterTickets.unshift({
-                    id: masterTickets.length + 1,
+                    id: Date.now(),
                     country: selectedCountry,
-                    title: document.getElementById('form-title').value || "Unspecified Infrastructural Issue",
+                    title: document.getElementById('form-title').value,
                     deptId: dBox.value,
                     dept: dBox.options[dBox.selectedIndex].text,
                     status: "Pending",
-                    color: "text-zinc-400 bg-zinc-400/10",
-                    location: "Current Coordinates",
+                    color: "text-zinc-400 bg-zinc-400/10 border-zinc-500/20",
+                    location: "Banda, Kampala", 
                     time: "Just Now",
                     caption: document.getElementById('form-caption').value,
-                    citizenMedia: uploadedMockMedia,
+                    citizenMedia: uploadedMockMedia || "📸 camera_capture.jpg",
+                    slaRemaining: "48h 00m left",
+                    satisfaction: null,
                     govResponse: null
                 });
                 uploadedMockMedia = null;
@@ -566,45 +605,50 @@
             });
         }
 
-        // --- View 7: State Administrator Dashboard Interventions ---
+        // --- View 7: Government Official Workspace Inbox ---
         function renderGovDashboard() {
             updateGovNavUI('gov_dashboard');
             const targetAgency = dynamicDepartments.find(d => d.id === assignedDeptId);
-            const agencyName = targetAgency ? targetAgency.name : "Unallocated Hub";
+            const agencyName = targetAgency ? targetAgency.name : "Unallocated Department";
 
             let html = `
                 <div class="space-y-1">
-                    <span class="text-[10px] font-mono tracking-wider text-amber-400 block uppercase">${selectedCountry} Node Dashboard</span>
-                    <h2 class="text-base font-bold text-zinc-200">${agencyName} Queue</h2>
+                    <span class="text-[9px] font-mono tracking-widest text-amber-400 block uppercase">${selectedCountry} Node Dashboard</span>
+                    <h2 class="text-base font-bold text-zinc-200">${agencyName} Inbox Queue</h2>
                 </div>
             `;
 
             const agencyTickets = masterTickets.filter(t => t.deptId === assignedDeptId && t.country === selectedCountry);
             if(agencyTickets.length === 0) {
-                html += `<p class="text-xs text-zinc-600 italic pt-4">No citizen resolution tracking logs pending for this queue code.</p>`;
+                html += `<p class="text-xs text-zinc-600 italic pt-6 px-1">No active citizen tracking records assigned to this workflow code.</p>`;
             } else {
                 agencyTickets.forEach(t => {
                     html += `
                         <div class="bg-zinc-900/50 border border-zinc-900 rounded-xl p-4 space-y-3">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <h4 class="text-sm font-bold text-zinc-200">${t.title}</h4>
-                                    <span class="text-xs text-zinc-500">Logged: ${t.time} | Loc: ${t.location}</span>
+                                    <h4 class="text-xs font-bold text-zinc-200">${t.title}</h4>
+                                    <span class="text-[10px] text-zinc-500 block font-mono">Logged: ${t.time} | Location: ${t.location}</span>
                                 </div>
-                                <span class="text-[10px] font-mono px-2 py-0.5 rounded ${t.color}">${t.status}</span>
+                                <span class="text-[9px] font-mono px-2 py-0.5 rounded border ${t.color}">${t.status}</span>
                             </div>
-                            <p class="text-xs text-zinc-400 italic bg-zinc-950 p-2.5 rounded border border-zinc-900">"${t.caption || 'No description asset provided.'}"</p>
+                            <p class="text-xs text-zinc-400 bg-zinc-950 p-2.5 rounded border border-zinc-900 font-mono">"${t.caption || 'No specific description added.'}"</p>
                             
                             ${t.govResponse ? `
-                                <div class="text-xs text-emerald-400 font-medium bg-emerald-500/5 p-2 rounded border border-emerald-500/10">
-                                    ✓ Resolution Logged: "${t.govResponse.message}"
+                                <div class="text-[11px] text-emerald-400 font-mono bg-emerald-500/5 p-2 rounded border border-emerald-500/10">
+                                    ✓ Loop Secure: "${t.govResponse.message}"
                                 </div>
                             ` : `
                                 <div class="space-y-2 pt-2 border-t border-zinc-900">
-                                    <span class="text-[10px] uppercase font-bold text-zinc-500 tracking-wider block">Deploy Official Countermeasure</span>
-                                    <input id="intel-${t.id}" type="text" placeholder="Resolution description, budget log, tracking metrics..." class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-xs text-zinc-200 focus:outline-none" />
-                                    <button onclick="submitGovIntervention(${t.id})" class="w-full bg-amber-500 text-zinc-950 font-bold py-2 rounded-lg text-xs hover:bg-amber-400 transition-colors">
-                                        Dispatch Official Ledger Response
+                                    <span class="text-[9px] uppercase font-bold text-zinc-500 tracking-wider block">Deploy Resolution Actions (SLA: ${t.slaRemaining})</span>
+                                    <input id="intel-${t.id}" type="text" placeholder="Explain the intervention, work receipt codes..." class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none" />
+                                    
+                                    <div class="text-[10px] text-zinc-500 font-mono italic p-1">
+                                        * Enforced resolution verification: Photo logs and GPS telemetry are attached automatically.
+                                    </div>
+                                    
+                                    <button onclick="submitGovIntervention(${t.id})" class="w-full bg-amber-500 text-zinc-950 font-bold py-2 rounded-lg text-xs hover:bg-amber-400 transition-colors uppercase tracking-wider">
+                                        Dispatch Verified Resolution
                                     </button>
                                 </div>
                             `}
@@ -618,54 +662,53 @@
 
         window.submitGovIntervention = function(ticketId) {
             const msg = document.getElementById(`intel-${ticketId}`).value;
-            if(!msg) return;
+            if(!msg) return alert("Intervention summary is required to resolve loops.");
 
-            const t = masterTickets.find(ticket => ticket.id === ticketId);
-            if(t) {
-                t.status = "Resolved";
-                t.color = "text-emerald-400 bg-emerald-400/10";
-                t.govResponse = {
-                    author: "Official Terminal Hub",
+            const ticket = masterTickets.find(t => t.id === ticketId);
+            if(ticket) {
+                ticket.status = "Resolved";
+                ticket.color = "text-emerald-400 bg-emerald-400/10 border-emerald-500/20";
+                ticket.govResponse = {
+                    author: "Official Hub Terminal",
                     message: msg,
-                    attachment: "📄 Budget_Release_Verified.pdf",
-                    media: "📸 Verification_Data.png"
+                    attachment: "📄 Works_Order_Receipt.pdf",
+                    media: "📸 Resolution_Verification_Proof.jpg"
                 };
                 renderGovDashboard();
             }
         };
 
-        // --- View 8: Global Agency Generation Terminal ---
+        // --- View 8: Global Agency Blueprint Creation ---
         function renderCreateDepartment() {
             updateGovNavUI('create_dept');
-            const currentStruct = standardHierarchies[selectedCountry].struct;
+            const structureLabel = hierarchyMatrix[selectedCountry].struct;
 
             mainContent.innerHTML = `
-                <div class="space-y-4 pt-2">
+                <div class="space-y-4 pt-1">
                     <div>
-                        <h2 class="text-base font-bold text-zinc-200">Register New Institutional Target</h2>
-                        <p class="text-xs text-zinc-500 mt-0.5">Instantiate a functional operational agency inside the ${selectedCountry} framework hierarchy.</p>
+                        <h2 class="text-base font-bold text-zinc-200">Register Operational Target</h2>
+                        <p class="text-xs text-zinc-500">Instantiate a functional administrative node inside the active ${selectedCountry} matrix.</p>
                     </div>
 
                     <div class="space-y-3 bg-zinc-900/30 p-4 rounded-xl border border-zinc-900">
-                        <label class="block space-y-1.5">
-                            <span class="text-xs text-zinc-400 font-medium">Agency / ${currentStruct} Name</span>
-                            <input id="new-dept-name" type="text" placeholder="e.g., National Environmental Inspectorate" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none" />
+                        <label class="block space-y-1">
+                            <span class="text-xs text-zinc-400 font-medium">${structureLabel} Name</span>
+                            <input id="new-dept-name" type="text" placeholder="e.g., Ministry of Internal Health" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-200 focus:outline-none" />
                         </label>
                         
-                        <label class="block space-y-1.5">
-                            <span class="text-xs text-zinc-400 font-medium">Identification Icon Glyph</span>
-                            <select id="new-dept-icon" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-300 focus:outline-none">
-                                <option value="🛡️">🛡️ Security / Enforcement</option>
-                                <option value="🌱">🌱 Agriculture & Environment</option>
-                                <option value="🏥">🏥 Healthcare & Wellness</option>
-                                <option value="🏫">🏫 Education & Facilities</option>
-                                <option value="🏛️">🏛️ Executive Council / Treasury</option>
+                        <label class="block space-y-1">
+                            <span class="text-xs text-zinc-400 font-medium">Glyph Indicator Symbol</span>
+                            <select id="new-dept-icon" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-300 focus:outline-none">
+                                <option value="🛡️">🛡️ Enforcement / Police</option>
+                                <option value="🌱">🌱 Environment & Wildlife</option>
+                                <option value="🏥">🏥 Medical & Supply Chain</option>
+                                <option value="🏛️">🏛️ Executive Council / Municipalities</option>
                             </select>
                         </label>
                     </div>
 
-                    <button id="btn-save-dept" class="w-full bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold rounded-xl py-3 text-sm transition-all shadow-lg">
-                        Instantiate Agency Node
+                    <button id="btn-save-dept" class="w-full bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold rounded-xl py-3 text-xs uppercase tracking-wider transition-all">
+                        Instantiate Department Matrix
                     </button>
                 </div>
             `;
@@ -679,8 +722,8 @@
                     id: newId,
                     country: selectedCountry,
                     name: n,
-                    followed: false,
-                    icon: document.getElementById('new-dept-icon').value
+                    icon: document.getElementById('new-dept-icon').value,
+                    followed: false
                 });
 
                 assignedDeptId = newId; 
@@ -688,7 +731,50 @@
             });
         }
 
-        // --- Application Bootstrap ---
+        // --- View 9: Citizen Profile & Score Metrics ---
+        function renderProfileView() {
+            updateCitizenNavUI('profile_view');
+            
+            mainContent.innerHTML = `
+                <div class="space-y-5 pt-2">
+                    <div class="bg-zinc-900/40 border border-zinc-900 rounded-2xl p-5 text-center space-y-3">
+                        <div class="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl mx-auto">🇺🇬</div>
+                        <div>
+                            <h3 class="font-bold text-base text-zinc-100">${citizenProfile.name}</h3>
+                            <span class="text-xs font-mono text-zinc-500">ID: ${citizenProfile.nin || "UNVERIFIED_SANDBOX"}</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-zinc-900">
+                            <div class="bg-zinc-950 p-2 rounded-xl border border-zinc-900">
+                                <span class="text-[10px] uppercase font-bold text-zinc-500 tracking-wider block">Civic Score</span>
+                                <span class="text-lg font-black text-emerald-400">${citizenProfile.score}</span>
+                            </div>
+                            <div class="bg-zinc-950 p-2 rounded-xl border border-zinc-900">
+                                <span class="text-[10px] uppercase font-bold text-zinc-500 tracking-wider block">Network Rank</span>
+                                <span class="text-xs font-bold text-zinc-300 block pt-1">Level ${citizenProfile.level} Watchdog</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase px-1">Unlocked Performance Badges</span>
+                        <div class="space-y-1.5">
+                            ${citizenProfile.badges.map(b => `
+                                <div class="bg-zinc-900/30 border border-zinc-900 px-3 py-2.5 rounded-xl text-xs font-medium text-zinc-300">
+                                    ${b}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <button onclick="navigateTo('portal_select')" class="w-full bg-zinc-900 text-zinc-400 hover:text-red-400 border border-zinc-800 font-medium py-3 rounded-xl text-xs uppercase tracking-wider transition-all">
+                        Disconnect Ledger Node
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- Application Bootstrap Launch ---
         navigateTo('portal_select');
     </script>
 </body>
