@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CivicDuty Platform Terminal - v3.0 Ultimate Production Engine</title>
-    <!-- Tailwind CSS Engine -->
+    <title>CivicDuty Terminal v3.0 - Speak, Serve and be Heard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -18,22 +17,11 @@
 
     <div class="max-w-md mx-auto min-h-screen bg-zinc-950 border-x border-zinc-900 flex flex-col justify-between shadow-2xl relative">
         
-        <!-- Platform Branding Topbar Header -->
         <header id="app-header" class="p-4 border-b border-zinc-900 sticky top-0 bg-zinc-950/90 backdrop-blur z-20 flex flex-col gap-1 hidden">
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <!-- Green Stick Figure Shield SVG Icon -->
-                    <div class="w-6 h-6 text-emerald-500">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8-10 8-10z"/>
-                            <circle cx="12" cy="11" r="2"/>
-                            <path d="M9 16c0-2.5 2-3 3-3s3 .5 3 3"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="text-base font-black tracking-wider uppercase text-zinc-100 leading-none">CivicDuty</h1>
-                        <span class="text-[9px] text-emerald-500 tracking-tight font-medium">Speak, serve and be heard</span>
-                    </div>
+                <div>
+                    <h1 class="text-base font-black tracking-wider uppercase text-zinc-100 leading-none">CivicDuty</h1>
+                    <span class="text-[9px] text-emerald-500 tracking-tight font-medium">Speak, serve and be heard</span>
                 </div>
                 <div class="flex items-center gap-1.5">
                     <span id="badge-role" class="text-[8px] font-mono px-1.5 py-0.5 rounded font-bold tracking-wider border">ROLE</span>
@@ -42,15 +30,11 @@
             </div>
         </header>
 
-        <!-- Dynamic Main Render Viewport -->
         <main id="main-content" class="flex-1 p-4 overflow-y-auto space-y-4">
-            <!-- Application States Render Dynamically Here -->
-        </main>
+            </main>
 
-        <!-- Context-Driven Navigation Interface Tabbar -->
         <nav id="app-nav" class="border-t border-zinc-900 p-2 bg-zinc-950 flex justify-around items-center sticky bottom-0 z-20 hidden">
-            <!-- Action Navigation Options Populated Dynamically By Role -->
-        </nav>
+            </nav>
     </div>
 
     <script>
@@ -63,7 +47,7 @@
         let uploadedMockMedia = null;
         let activeThreadTicketId = null;
 
-        // Citizen Core Profile Storage
+        // Citizen Specific Score Profile Metrics
         let citizenProfile = {
             name: "Sovereign Citizen",
             nin: "",
@@ -89,7 +73,7 @@
             { 
                 id: 101, 
                 country: "Uganda",
-                source: "App", // App | SMS | USSD
+                source: "App",
                 title: "Main Street Water Main Burst", 
                 deptId: "nwsc",
                 dept: "National Water & Sewerage Corp", 
@@ -98,7 +82,7 @@
                 location: "Banda, Kampala", 
                 time: "2h ago",
                 caption: "Water pressure has completely destroyed the sidewalk asphalt here. Flooding local premises.",
-                citizenMedia: "📸 sidewalk_flood.jpg",
+                citizenMedia: "https://images.unsplash.com/photo-1542044896530-05d85be9b11a?w=400&auto=format&fit=crop&q=60",
                 slaRemaining: "0h 00m (SLA Met)",
                 satisfaction: "Satisfied",
                 govResponse: {
@@ -109,7 +93,7 @@
                 },
                 comments: [
                     { sender: "Sovereign Citizen", role: "citizen", msg: "Water pressure is dropping slightly but the pavement is fully cracked.", time: "1h ago", media: null },
-                    { sender: "NWSC Engineering Hub", role: "government", msg: "We have confirmed shutoff upstream. Crews are wrapping up asphalt clearance.", time: "45m ago", media: "📸 Fixed_Sidewalk_Pipeline.jpg" }
+                    { sender: "NWSC Engineering Hub", role: "government", msg: "We have confirmed shutoff upstream. Crews are wrapping up asphalt clearance.", time: "45m ago", media: null }
                 ]
             },
             { 
@@ -123,8 +107,8 @@
                 color: "text-amber-400 bg-amber-400/10 border-amber-500/20", 
                 location: "Kisenyi Ring Rd", 
                 time: "5h ago",
-                caption: "[Sourced via USSD *123#] Heavy pothole developing right after the blind corner. Highly dangerous for riders at night.",
-                citizenMedia: null,
+                caption: "Massive pothole developing right after the blind corner. Highly dangerous for riders at night.",
+                citizenMedia: "https://images.unsplash.com/photo-1515162305285-0293e4767cc2?w=400&auto=format&fit=crop&q=60",
                 slaRemaining: "42h 55m left",
                 satisfaction: null,
                 govResponse: null,
@@ -132,11 +116,10 @@
             }
         ];
 
-        // Monetization & Administrative Platform Management Data Ledgers
+        // Monetization & Founder Metrics
         let platformConfig = {
             globalSlaHours: 48,
-            aiModerationThreshold: 85,
-            maintenanceMode: false
+            aiModerationThreshold: 85
         };
 
         let monetizationMetrics = {
@@ -146,12 +129,14 @@
             csosRegistered: 6
         };
 
+        // --- View Elements DOM Selectors ---
         const mainContent = document.getElementById('main-content');
         const appHeader = document.getElementById('app-header');
         const appNav = document.getElementById('app-nav');
         const nodeLabel = document.getElementById('country-node');
         const roleLabel = document.getElementById('badge-role');
 
+        // --- Route Navigation Matrix ---
         function navigateTo(view) {
             currentView = view;
             
@@ -164,7 +149,7 @@
                 nodeLabel.innerText = nodeTag;
                 
                 if(userRole === 'founder') {
-                    roleLabel.innerText = "FOUNDER_ADMIN";
+                    roleLabel.innerText = "FOUNDER_HQ";
                     roleLabel.className = "text-[8px] font-mono px-1.5 py-0.5 rounded font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20";
                 } else if(userRole === 'government') {
                     roleLabel.innerText = "GOV_OFFICIAL";
@@ -198,17 +183,17 @@
             }
         }
 
-        // --- Core Application Navigation Bar Layout ---
+        // --- Navbar State Management Engine ---
         function buildDynamicNavbar() {
             if (userRole === 'founder') {
                 appNav.innerHTML = `
                     <button id="nav-founder-dash" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-purple-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-                        <span class="text-[9px] font-medium tracking-wide">Control Unit</span>
+                        <span class="text-[9px] font-medium tracking-wide">Command Unit</span>
                     </button>
                     <button onclick="userRole='citizen'; navigateTo('feed');" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-zinc-500 hover:text-zinc-300">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                        <span class="text-[9px] font-medium tracking-wide">View App</span>
+                        <span class="text-[9px] font-medium tracking-wide">Observe Feed</span>
                     </button>
                     <button onclick="navigateTo('portal_select')" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-zinc-600 hover:text-red-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
@@ -223,7 +208,7 @@
                     </button>
                     <button id="nav-create-dept" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-zinc-500 hover:text-zinc-300">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span class="text-[9px] font-medium tracking-wide">Add Blueprint</span>
+                        <span class="text-[9px] font-medium tracking-wide">Create Dept</span>
                     </button>
                     <button onclick="navigateTo('portal_select')" class="flex flex-col items-center gap-1 py-1.5 px-3 rounded-xl text-zinc-600 hover:text-red-400">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
@@ -270,77 +255,76 @@
             document.getElementById('nav-create-dept').className = `flex flex-col items-center gap-1 py-1.5 px-3 transition-colors ${active === 'create_dept' ? 'text-emerald-400' : 'text-zinc-500'}`;
         }
 
-        // --- View 1: Unified Access Gate ---
+        // --- View 1: Entry Gate Portal ---
         function renderPortalSelect() {
             mainContent.innerHTML = `
-                <div class="space-y-6 pt-12 pb-4 text-center">
+                <div class="space-y-6 pt-16 pb-4 text-center">
                     <div class="space-y-2">
-                        <!-- Green Stick Figure Shield SVG Icon -->
-                        <div class="w-14 h-14 text-emerald-500 mx-auto drop-shadow-[0_0_8px_rgba(16,185,129,0.2)]">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8-10 8-10z"/>
-                                <circle cx="12" cy="11" r="2"/>
-                                <path d="M9 16c0-2.5 2-3 3-3s3 .5 3 3"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-black tracking-wider text-zinc-100 uppercase">CIVICDUTY TERMINAL</h2>
-                        <p class="text-xs text-emerald-500 font-semibold tracking-wide">Speak, serve and be heard</p>
+                        <h2 class="text-xl font-black tracking-wider text-zinc-100 uppercase">CIVICDUTY RADAR</h2>
+                        <p class="text-xs text-emerald-500 font-semibold uppercase tracking-wider">Speak, serve and be heard</p>
                     </div>
 
-                    <div class="space-y-2.5 pt-4">
-                        <button onclick="userRole='citizen'; navigateTo('citizen_onboarding');" class="w-full bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-900 p-4 rounded-xl text-left transition-all flex justify-between items-center group">
-                            <div class="space-y-0.5">
-                                <span class="text-xs font-bold text-zinc-200 block">Sovereign Citizen Portal</span>
-                                <span class="text-[11px] text-zinc-500 block">Report parameters, track active response loops.</span>
+                    <div class="space-y-3 pt-6">
+                        <button onclick="userRole='citizen'; navigateTo('citizen_onboarding');" class="w-full bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
+                            <div class="space-y-1">
+                                <span class="text-sm font-bold text-zinc-200 block">Sovereign Citizen Gateway</span>
+                                <span class="text-xs text-zinc-500 block">File geo-verified logs, track active ministerial SLA walls.</span>
                             </div>
-                            <span class="text-zinc-600 group-hover:text-emerald-400 text-xs transition-colors">➔</span>
+                            <span class="text-zinc-600 group-hover:text-emerald-400 transition-colors">➔</span>
                         </button>
 
-                        <button onclick="userRole='government'; navigateTo('gov_onboarding');" class="w-full bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-900 p-4 rounded-xl text-left transition-all flex justify-between items-center group">
-                            <div class="space-y-0.5">
-                                <span class="text-xs font-bold text-amber-400 block">State Administrator Access</span>
-                                <span class="text-[11px] text-zinc-500 block">Manage localized tickets, upload closure receipts.</span>
+                        <button onclick="userRole='government'; navigateTo('gov_onboarding');" class="w-full bg-zinc-900/60 hover:bg-zinc-900 border border-zinc-800 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
+                            <div class="space-y-1">
+                                <span class="text-sm font-bold text-amber-400 block">State Administrator Access</span>
+                                <span class="text-xs text-zinc-500 block">Deploy resolution metrics, attach work order receipts.</span>
                             </div>
-                            <span class="text-zinc-600 group-hover:text-amber-400 text-xs transition-colors">➔</span>
+                            <span class="text-zinc-600 group-hover:text-amber-400 transition-colors">➔</span>
                         </button>
 
-                        <button onclick="userRole='founder'; navigateTo('founder_admin');" class="w-full bg-zinc-900/30 hover:bg-zinc-900/60 border border-purple-900/40 p-4 rounded-xl text-left transition-all flex justify-between items-center group">
-                            <div class="space-y-0.5">
-                                <span class="text-xs font-bold text-purple-400 block">HQ Founder Command Unit</span>
-                                <span class="text-[11px] text-zinc-500 block">Collect anonymized analytics and premium data streams.</span>
+                        <button onclick="userRole='founder'; navigateTo('founder_admin');" class="w-full bg-zinc-900/30 hover:bg-zinc-900/60 border border-purple-950 p-5 rounded-2xl text-left transition-all flex justify-between items-center group">
+                            <div class="space-y-1">
+                                <span class="text-sm font-bold text-purple-400 block">HQ Founder Control Desk</span>
+                                <span class="text-xs text-zinc-500 block">Aggregate platform metadata parameters for safe monetization metrics.</span>
                             </div>
-                            <span class="text-zinc-600 group-hover:text-purple-400 text-xs transition-colors">➔</span>
+                            <span class="text-zinc-600 group-hover:text-purple-400 transition-colors">➔</span>
                         </button>
                     </div>
                 </div>
             `;
         }
 
+        // --- View 2: Onboarding Loops ---
         function renderCitizenOnboarding() {
             mainContent.innerHTML = `
-                <div class="space-y-4 pt-2">
-                    <span class="text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('portal_select')">⇜ Return to Gate</span>
-                    <div>
-                        <h2 class="text-base font-bold text-zinc-100">Citizen Identity Link</h2>
-                        <p class="text-xs text-zinc-400">Lock your terminal into verification ledgers.</p>
+                <div class="space-y-5 pt-2">
+                    <div class="flex items-center gap-1 text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('portal_select')">
+                        <span>⇜ Return to Access Gate</span>
                     </div>
-                    <div class="space-y-3 bg-zinc-900/40 p-4 rounded-xl border border-zinc-900">
-                        <label class="block space-y-1">
-                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Select Node</span>
-                            <select id="citizen-country-select" class="w-full bg-zinc-950 border border-zinc-900 rounded-lg p-2.5 text-xs text-zinc-200">
+                    <div>
+                        <h2 class="text-lg font-bold tracking-tight text-zinc-100">Sovereign Identity Link</h2>
+                    </div>
+
+                    <div class="space-y-4 bg-zinc-900/40 p-5 rounded-2xl border border-zinc-900">
+                        <label class="block space-y-1.5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Select Nation State</span>
+                            <select id="citizen-country-select" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none">
                                 ${Object.keys(hierarchyMatrix).map(c => `<option value="${c}">${c}</option>`).join('')}
                             </select>
                         </label>
-                        <label class="block space-y-1">
-                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">National ID Token (NIN)</span>
-                            <input id="citizen-nin" type="text" placeholder="CM780211X..." class="w-full bg-zinc-950 border border-zinc-900 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none" />
+
+                        <label class="block space-y-1.5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">National Identification Token (NIN)</span>
+                            <input id="citizen-nin" type="text" placeholder="Enter ID string..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none" />
                         </label>
                     </div>
-                    <button id="btn-confirm-citizen" class="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-bold rounded-xl py-3 text-xs transition-all">Initialize Access</button>
+
+                    <button id="btn-confirm-citizen" class="w-full bg-zinc-100 hover:bg-white text-zinc-950 font-bold rounded-xl py-3.5 text-sm transition-all">
+                        Initialize Node Access
+                    </button>
                 </div>
             `;
             document.getElementById('btn-confirm-citizen').addEventListener('click', () => {
-                if(!document.getElementById('citizen-nin').value) return alert("NIN required.");
+                if(!document.getElementById('citizen-nin').value) return alert("Identification string mandatory.");
                 selectedCountry = document.getElementById('citizen-country-select').value;
                 nodeTag = hierarchyMatrix[selectedCountry].tag;
                 navigateTo('feed');
@@ -349,77 +333,99 @@
 
         function renderGovOnboarding() {
             mainContent.innerHTML = `
-                <div class="space-y-4 pt-2">
-                    <span class="text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('portal_select')">⇜ Return to Gate</span>
-                    <div>
-                        <h2 class="text-base font-bold text-amber-400">Official Clearance Desk</h2>
-                        <p class="text-xs text-zinc-400">Access verified administrative action loops.</p>
+                <div class="space-y-5 pt-2">
+                    <div class="flex items-center gap-1 text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('portal_select')">
+                        <span>⇜ Return to Access Gate</span>
                     </div>
-                    <div class="space-y-3 bg-zinc-900/40 p-4 rounded-xl border border-zinc-900">
-                        <label class="block space-y-1">
-                            <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Jurisdiction</span>
-                            <select id="gov-country-select" class="w-full bg-zinc-950 border border-zinc-900 rounded-lg p-2.5 text-xs text-zinc-200">
+                    <div>
+                        <h2 class="text-lg font-bold tracking-tight text-amber-400">Official Clearance Hub</h2>
+                    </div>
+
+                    <div class="space-y-4 bg-zinc-900/40 p-5 rounded-2xl border border-zinc-900">
+                        <label class="block space-y-1.5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Select Node Jurisdiction</span>
+                            <select id="gov-country-select" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none">
                                 ${Object.keys(hierarchyMatrix).map(c => `<option value="${c}">${c}</option>`).join('')}
                             </select>
                         </label>
-                        <div id="gov-dept-wrapper" class="space-y-1"></div>
+                        <div id="gov-dept-wrapper" class="space-y-1.5"></div>
                     </div>
-                    <button id="btn-confirm-gov" class="w-full bg-amber-500 text-zinc-950 font-bold rounded-xl py-3 text-xs">Authenticate Device</button>
+
+                    <button id="btn-confirm-gov" class="w-full bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold rounded-xl py-3.5 text-sm transition-all">
+                        Authenticate Official Terminal
+                    </button>
                 </div>
             `;
-            const el = document.getElementById('gov-country-select');
-            const upd = () => {
-                const filtered = dynamicDepartments.filter(d => d.country === el.value);
-                document.getElementById('gov-dept-wrapper').innerHTML = `
-                    <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Assigned Sector Group</span>
-                    <select id="gov-dept-select" class="w-full bg-zinc-950 border border-zinc-900 rounded-lg p-2.5 text-xs text-zinc-200">
-                        ${filtered.map(d => `<option value="${d.id}">${d.name}</option>`).join('')}
-                    </select>
+            const countrySelector = document.getElementById('gov-country-select');
+            function updateDeptDropdown() {
+                const c = countrySelector.value;
+                const filteredDepts = dynamicDepartments.filter(d => d.country === c);
+                let dropdownHtml = `
+                    <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Assigned Autonomous Branch</span>
+                    <select id="gov-dept-select" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none">
                 `;
-            };
-            el.addEventListener('change', upd);
-            upd();
+                filteredDepts.forEach(d => { dropdownHtml += `<option value="${d.id}">${d.name}</option>`; });
+                dropdownHtml += `</select>`;
+                document.getElementById('gov-dept-wrapper').innerHTML = dropdownHtml;
+            }
+            countrySelector.addEventListener('change', updateDeptDropdown);
+            updateDeptDropdown();
+
             document.getElementById('btn-confirm-gov').addEventListener('click', () => {
-                selectedCountry = el.value;
+                selectedCountry = countrySelector.value;
                 nodeTag = hierarchyMatrix[selectedCountry].tag;
                 assignedDeptId = document.getElementById('gov-dept-select').value;
                 navigateTo('gov_dashboard');
             });
         }
 
-        // --- View 4: WhatsApp Style Main Post Feed & Communication Network ---
+        // --- View 4: Twitter-Energy Social Timestream Feed ---
         function renderFeed() {
             updateCitizenNavUI('feed');
             let html = `
-                <div class="bg-zinc-900/30 border border-zinc-900 p-2.5 rounded-xl text-[11px] text-zinc-400 flex justify-between items-center">
-                    <span>📡 Multi-Channel Bridges: <strong class="text-zinc-200">USSD *123# & SMS Gateways</strong> active</span>
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <div class="bg-zinc-900/40 border border-zinc-900 p-3 rounded-xl flex items-center justify-between text-[11px] text-zinc-400 font-mono">
+                    <span class="flex items-center gap-1.5">📡 Channels: <strong class="text-zinc-200">USSD *123# / SMS Gateway</strong> protocols online</span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]"></span>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-4">
             `;
 
             masterTickets.forEach(t => {
-                let channelBadge = t.source === 'USSD' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : t.source === 'SMS' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                let channelText = t.source === 'USSD' ? 'Sourced via USSD' : t.source === 'SMS' ? 'Sourced via SMS' : 'Sourced via App';
                 html += `
-                    <div class="bg-zinc-900/40 border border-zinc-900 rounded-xl p-4 space-y-3 hover:border-zinc-800 transition-all cursor-pointer" onclick="openTicketThread(${t.id})">
-                        <div class="flex justify-between items-start gap-2">
-                            <div>
-                                <div class="flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[8px] font-mono tracking-wider px-1.5 py-0.5 rounded border ${channelBadge}">⚡ ${t.source.toUpperCase()}</span>
-                                    <span class="text-xs text-zinc-500 font-medium">${t.dept}</span>
-                                </div>
-                                <h3 class="font-bold text-sm text-zinc-200 mt-1">${t.title}</h3>
+                    <div class="bg-zinc-900/20 border-b border-zinc-900 pb-4 pt-1 space-y-3 cursor-pointer hover:bg-zinc-900/10 transition-all" onclick="openTicketThread(${t.id})">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-black text-xs text-zinc-300 shrink-0 uppercase tracking-wider">
+                                ${t.deptId.slice(0, 2)}
                             </div>
-                            <span class="text-[9px] font-mono px-2 py-0.5 rounded border ${t.color}">${t.status}</span>
-                        </div>
-                        <p class="text-xs text-zinc-400 line-clamp-2 leading-relaxed">${t.caption}</p>
-                        <div class="flex justify-between items-center text-[10px] text-zinc-500 pt-2 border-t border-zinc-900/60 font-mono">
-                            <span>📍 ${t.location}</span>
-                            <span class="text-emerald-500 font-semibold">💬 ${t.comments.length} Threads ➔</span>
+                            <div class="flex-1 space-y-1">
+                                <div class="flex items-center justify-between gap-2 flex-wrap">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="font-black text-sm text-zinc-100 tracking-tight">${t.dept}</span>
+                                        <span class="text-[10px] text-zinc-500 font-mono">@${t.deptId} · ${t.time}</span>
+                                    </div>
+                                    <span class="text-[9px] font-mono px-1.5 py-0.5 rounded border ${t.color}">${t.status}</span>
+                                </div>
+                                <p class="text-xs text-zinc-400 font-mono text-[10px] text-emerald-500">${channelText}</p>
+                                <h3 class="font-bold text-xs text-zinc-200 pt-0.5">${t.title}</h3>
+                                <p class="text-xs text-zinc-300 leading-relaxed">${t.caption}</p>
+                                
+                                ${t.citizenMedia ? `
+                                    <div class="mt-2 rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 max-h-48 flex items-center justify-center">
+                                        <img src="${t.citizenMedia}" alt="Proof context timeline" class="w-full h-full object-cover" />
+                                    </div>
+                                ` : ''}
+
+                                <div class="flex items-center gap-6 text-[11px] text-zinc-500 font-mono pt-3">
+                                    <span class="hover:text-emerald-400 flex items-center gap-1">📍 ${t.location}</span>
+                                    <span class="hover:text-emerald-400 flex items-center gap-1">💬 ${t.comments.length} Comments</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
             });
+
             html += `</div>`;
             mainContent.innerHTML = html;
         }
@@ -429,44 +435,60 @@
             navigateTo('ticket_thread');
         };
 
-        // --- View 5: WhatsApp-Style Interactive Comments & Thread ---
+        // --- View 5: Comprehensive Interactive Comment Thread Section ---
         function renderTicketThread() {
             const ticket = masterTickets.find(t => t.id === activeThreadTicketId);
             if(!ticket) return navigateTo('feed');
 
             let html = `
-                <div class="flex items-center gap-2 text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('feed')">
-                    <span>⇜ Back to Central Registry</span>
+                <div class="flex items-center gap-1 text-xs text-zinc-500 cursor-pointer hover:text-zinc-300" onclick="navigateTo('feed')">
+                    <span>⇜ Back to Timeline</span>
                 </div>
-                <div class="bg-zinc-900/60 border border-zinc-900 p-4 rounded-xl space-y-2">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] text-zinc-500 font-mono">${ticket.dept}</span>
+
+                <div class="bg-zinc-900/30 border border-zinc-900 p-4 rounded-xl space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400 uppercase">${ticket.deptId.slice(0,2)}</div>
+                            <div>
+                                <span class="font-black text-xs text-zinc-200 block">${ticket.dept}</span>
+                                <span class="text-[9px] text-zinc-500 font-mono block">📍 ${ticket.location}</span>
+                            </div>
+                        </div>
                         <span class="text-[9px] font-mono px-2 py-0.5 rounded border ${ticket.color}">${ticket.status}</span>
                     </div>
-                    <h3 class="font-bold text-base text-zinc-100">${ticket.title}</h3>
-                    <p class="text-xs text-zinc-300">${ticket.caption}</p>
+                    <h3 class="font-bold text-sm text-zinc-100">${ticket.title}</h3>
+                    <p class="text-xs text-zinc-300 leading-relaxed">${ticket.caption}</p>
+                    
+                    ${ticket.citizenMedia ? `
+                        <div class="rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950">
+                            <img src="${ticket.citizenMedia}" class="w-full max-h-40 object-cover" />
+                        </div>
+                    ` : ''}
                 </div>
 
                 <div class="space-y-3 pt-2">
-                    <span class="text-[10px] font-bold tracking-wider text-zinc-600 uppercase block px-1">Thread Communication Ledger</span>
-                    <div class="space-y-2.5 max-h-[260px] overflow-y-auto pr-1">
+                    <span class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase block px-1">Responses</span>
+                    <div class="space-y-3 max-h-[220px] overflow-y-auto pr-1">
             `;
 
             if(ticket.comments.length === 0) {
-                html += `<p class="text-xs text-zinc-600 italic p-4 text-center">No messages logged. Initiate communication below.</p>`;
+                html += `<p class="text-xs text-zinc-600 italic py-4 text-center">No conversational nodes initialized here yet.</p>`;
             } else {
                 ticket.comments.forEach(c => {
                     const isGov = c.role === 'government';
-                    const alignment = isGov ? 'ml-6 bg-amber-500/5 border-amber-500/20' : 'mr-6 bg-zinc-900/60 border-zinc-900';
-                    const textLabel = isGov ? 'text-amber-400' : 'text-emerald-400';
+                    const borderStyle = isGov ? 'border-amber-500/20 bg-amber-500/[0.02]' : 'border-zinc-900 bg-zinc-900/20';
                     html += `
-                        <div class="border p-3 rounded-xl space-y-1 ${alignment}">
+                        <div class="border p-3 rounded-xl space-y-1.5 transition-all ${borderStyle}">
                             <div class="flex justify-between items-center text-[10px] font-mono">
-                                <span class="font-bold ${textLabel}">● ${c.sender}</span>
+                                <span class="font-bold ${isGov ? 'text-amber-400' : 'text-emerald-400'}">● ${c.sender}</span>
                                 <span class="text-zinc-500">${c.time}</span>
                             </div>
-                            <p class="text-xs text-zinc-300 leading-relaxed">${c.msg}</p>
-                            ${c.media ? `<div class="text-[9px] font-mono text-zinc-500 bg-zinc-950 p-1.5 rounded border border-zinc-900 mt-1">${c.media}</div>` : ''}
+                            <p class="text-xs text-zinc-300">${c.msg}</p>
+                            ${c.media ? `
+                                <div class="rounded-lg overflow-hidden border border-zinc-800 max-h-24 mt-1">
+                                    <img src="${c.media}" class="w-full h-full object-cover" />
+                                </div>
+                            ` : ''}
                         </div>
                     `;
                 });
@@ -476,14 +498,14 @@
                     </div>
                 </div>
 
-                <div class="pt-2 border-t border-zinc-900 space-y-2">
+                <div class="pt-3 border-t border-zinc-900 space-y-2">
                     <div class="flex gap-2">
-                        <input id="thread-input" type="text" placeholder="Type WhatsApp-style reply..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-200 focus:outline-none" />
-                        <button onclick="submitThreadMessage()" class="bg-emerald-500 text-zinc-950 px-4 py-2 rounded-xl text-xs font-black uppercase">Send</button>
+                        <input id="thread-input" type="text" placeholder="Post a response..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-200 focus:outline-none" />
+                        <button onclick="submitThreadMessage()" class="bg-emerald-500 text-zinc-950 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Reply</button>
                     </div>
-                    <div class="flex justify-between items-center text-[10px] text-zinc-500 px-1">
-                        <span class="cursor-pointer hover:text-zinc-300" onclick="attachThreadMedia()">📎 Attach Proof Media</span>
-                        <span id="thread-media-status" class="font-mono text-emerald-400"></span>
+                    <div class="flex justify-between items-center text-[10px] text-zinc-500 px-1 font-mono">
+                        <span class="cursor-pointer hover:text-zinc-300 flex items-center gap-1" onclick="attachThreadMedia()">📷 Attach Media Asset</span>
+                        <span id="thread-media-status" class="text-emerald-400 truncate max-w-[200px]"></span>
                     </div>
                 </div>
             `;
@@ -491,8 +513,8 @@
         }
 
         window.attachThreadMedia = function() {
-            uploadedMockMedia = "📸 ATTACHMENT_" + Math.floor(Math.random() * 899 + 100) + ".jpg";
-            document.getElementById('thread-media-status').innerText = uploadedMockMedia;
+            uploadedMockMedia = "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=400&auto=format&fit=crop&q=60";
+            document.getElementById('thread-media-status').innerText = "✓ image_payload.jpg linked";
         };
 
         window.submitThreadMessage = function() {
@@ -501,8 +523,8 @@
             const ticket = masterTickets.find(t => t.id === activeThreadTicketId);
             if(ticket) {
                 ticket.comments.push({
-                    sender: userRole === 'government' ? "Official Terminal" : userRole === 'founder' ? "HQ Founder Admin" : citizenProfile.name,
-                    role: userRole === 'founder' ? 'citizen' : userRole,
+                    sender: userRole === 'government' ? "Official Branch Representative" : userRole === 'founder' ? "HQ Founder Admin" : citizenProfile.name,
+                    role: userRole === 'founder' ? 'government' : userRole,
                     msg: raw,
                     time: "Just Now",
                     media: uploadedMockMedia
@@ -512,60 +534,48 @@
             }
         };
 
-        // --- View 6: HQ Founder Command Unit & Platform Data Monetization Control ---
+        // --- View 6: HQ Founder Strategic Management & Data Monetization Control ---
         function renderFounderAdmin() {
             mainContent.innerHTML = `
                 <div class="space-y-4">
                     <div>
-                        <span class="text-[9px] font-mono tracking-widest text-purple-400 block uppercase">Root Network Architecture</span>
-                        <h2 class="text-base font-black tracking-tight text-zinc-100">FOUNDER ACCESS & MANAGEMENT</h2>
+                        <span class="text-[9px] font-mono tracking-widest text-purple-400 block uppercase">Root Administrative Command</span>
+                        <h2 class="text-base font-black text-zinc-100">FOUNDER ACCESS & PLATFORM TELEMETRY</h2>
                     </div>
 
-                    <!-- Platform Monetization Dash Matrix -->
-                    <div class="bg-gradient-to-br from-purple-950/20 to-zinc-900/40 border border-purple-900/40 rounded-xl p-4 space-y-2.5">
-                        <div class="flex justify-between items-center border-b border-purple-900/30 pb-1.5">
-                            <span class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Monetizable Data & Assets</span>
+                    <div class="bg-purple-950/10 border border-purple-900/30 rounded-xl p-4 space-y-3">
+                        <div class="flex justify-between items-center border-b border-purple-900/20 pb-2">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase font-mono tracking-wider">Monetizable Analytical Assets</span>
                             <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2 font-mono">
-                            <div class="bg-zinc-950/80 border border-zinc-900 p-2 rounded-lg">
-                                <span class="text-[8px] text-zinc-500 block uppercase">CSO Paid API Nodes</span>
-                                <span class="text-sm font-black text-zinc-100">${monetizationMetrics.csosRegistered} Portals</span>
+                        <div class="grid grid-cols-2 gap-2 font-mono text-zinc-200">
+                            <div class="bg-zinc-950 p-2.5 rounded-lg border border-zinc-900">
+                                <span class="text-[8px] text-zinc-500 block uppercase">CSO Portal Nodes</span>
+                                <span class="text-sm font-black">${monetizationMetrics.csosRegistered} Groups</span>
                             </div>
-                            <div class="bg-zinc-950/80 border border-zinc-900 p-2 rounded-lg">
-                                <span class="text-[8px] text-zinc-500 block uppercase">Anonymized Telemetry Pulls</span>
-                                <span class="text-sm font-black text-zinc-100">${monetizationMetrics.apiCallsThisMonth} Calls</span>
+                            <div class="bg-zinc-950 p-2.5 rounded-lg border border-zinc-900">
+                                <span class="text-[8px] text-zinc-500 block uppercase">Anonymized Pulls</span>
+                                <span class="text-sm font-black">${monetizationMetrics.apiCallsThisMonth} Hits</span>
                             </div>
                         </div>
-                        <div class="bg-zinc-950 p-2 rounded-lg border border-zinc-900 flex justify-between items-center">
-                            <span class="text-[9px] text-zinc-400 font-mono">Data Stream Value Collected:</span>
-                            <span class="text-xs font-black text-emerald-400 font-mono">+$${monetizationMetrics.revenueGeneratedUSD} USD</span>
+                        <div class="bg-zinc-950 p-3 rounded-lg border border-zinc-900 flex justify-between items-center font-mono">
+                            <span class="text-[9px] text-zinc-400">Data Stream Net Value:</span>
+                            <span class="text-xs font-black text-emerald-400">+$${monetizationMetrics.revenueGeneratedUSD} USD</span>
                         </div>
-                        <p class="text-[10px] text-zinc-500 leading-normal italic">
-                            * Platform Revenue model: We clean, aggregate, and package anonymized municipal telemetry data into direct feeds for Civil Society Organizations (CSOs), researchers, and telecommunication partners via premium subscription contracts.
+                        <p class="text-[10px] text-zinc-500 leading-relaxed italic">
+                            * Operational Strategy Data Loop: We aggregate clean, multi-channel structural parameters (USSD/SMS/App metrics) into programmatic reporting clusters sold securely to analytical tracking units.
                         </p>
                     </div>
 
-                    <!-- Platform Configuration Engine Controls -->
                     <div class="bg-zinc-900/40 border border-zinc-900 rounded-xl p-4 space-y-3">
-                        <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">System Maintenance Controls</span>
+                        <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block font-mono">Infrastructure Maintenance Desk</span>
                         
                         <div class="flex justify-between items-center bg-zinc-950 p-2.5 rounded-lg border border-zinc-900">
                             <div class="space-y-0.5">
-                                <span class="text-xs font-bold text-zinc-300 block">AI Moderation Shield</span>
-                                <span class="text-[10px] text-zinc-500 block">Current safety rejection: ${platformConfig.aiModerationThreshold}%</span>
+                                <span class="text-xs font-bold text-zinc-300 block">AI Stream Moderation Filter</span>
+                                <span class="text-[10px] text-zinc-500 block">Current rejection threshold: ${platformConfig.aiModerationThreshold}%</span>
                             </div>
-                            <button onclick="platformConfig.aiModerationThreshold = platformConfig.aiModerationThreshold === 85 ? 95 : 85; renderFounderAdmin();" class="text-[10px] font-mono px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded font-bold uppercase">
-                                Adjust Toggle
-                            </button>
-                        </div>
-
-                        <div class="flex justify-between items-center bg-zinc-950 p-2.5 rounded-lg border border-zinc-900">
-                            <div class="space-y-0.5">
-                                <span class="text-xs font-bold text-zinc-300 block">Global Infrastructure Lock</span>
-                                <span class="text-[10px] text-zinc-500 block">Maintenance mode tracking is offline.</span>
-                            </div>
-                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <button onclick="platformConfig.aiModerationThreshold = platformConfig.aiModerationThreshold === 85 ? 95 : 85; renderFounderAdmin();" class="text-[10px] font-mono px-2 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded font-bold uppercase">Toggle</button>
                         </div>
                     </div>
                 </div>
@@ -573,9 +583,9 @@
         }
 
         // --- Other System Fallback Module Components ---
-        function renderDepartments() { updateCitizenNavUI('departments'); mainContent.innerHTML = `<h3 class="text-xs text-zinc-500 font-bold uppercase p-2">Sectors Dashboard</h3><p class="text-xs text-zinc-400 px-2">Subscribed channels are tracked dynamically in the main registry stream.</p>`; }
-        function renderReportForm() { updateCitizenNavUI('report'); mainContent.innerHTML = `<h3 class="text-xs text-zinc-500 font-bold uppercase p-2">Dispatched Records Channel</h3><p class="text-xs text-zinc-400 px-2">SMS & USSD pipelines funnel structured data entries back to specific nodes automatically.</p>`; }
-        function renderProfileView() { updateCitizenNavUI('profile_view'); mainContent.innerHTML = `<div class="bg-zinc-900/40 border border-zinc-900 p-4 rounded-xl text-center space-y-2"><span class="text-xs text-zinc-400 block font-bold">${citizenProfile.name}</span><span class="text-xs text-emerald-400 block font-mono">Performance Score: ${citizenProfile.score} Pts</span><button onclick="navigateTo('portal_select')" class="bg-zinc-950 text-xs px-4 py-2 border border-zinc-900 rounded-xl mt-4">Disconnect Session</button></div>`; }
+        function renderDepartments() { updateCitizenNavUI('departments'); mainContent.innerHTML = `<h3 class="text-xs text-zinc-500 font-bold uppercase p-2">Sectors Dashboard</h3>`; }
+        function renderReportForm() { updateCitizenNavUI('report'); mainContent.innerHTML = `<h3 class="text-xs text-zinc-500 font-bold uppercase p-2">Dispatched Records Channel</h3>`; }
+        function renderProfileView() { updateCitizenNavUI('profile_view'); mainContent.innerHTML = `<div class="bg-zinc-900/40 border border-zinc-900 p-4 rounded-xl text-center"><span class="text-xs text-zinc-400 block font-bold">${citizenProfile.name}</span><button onclick="navigateTo('portal_select')" class="bg-zinc-950 text-xs px-4 py-2 border border-zinc-900 rounded-xl mt-4">Disconnect Session</button></div>`; }
         function renderGovDashboard() { updateGovNavUI('gov_dashboard'); mainContent.innerHTML = `<div class="space-y-2"><h3 class="text-xs text-amber-400 font-bold uppercase font-mono">Official Processing Workdesk</h3><p class="text-xs text-zinc-500">Select any individual file inside the main application Registry stream feed to instantly reply or attach proof assets directly into the communication thread loop.</p></div>`; }
         function renderCreateDepartment() { updateGovNavUI('create_dept'); mainContent.innerHTML = `<h3 class="text-xs text-zinc-400 font-bold uppercase p-2">Blueprint Allocation Control</h3>`; }
 
@@ -584,4 +594,3 @@
     </script>
 </body>
 </html>
-
